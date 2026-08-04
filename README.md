@@ -20,3 +20,7 @@ The application prints a greeting. The name argument is optional and defaults to
 ## CodeQL
 
 The workflow at `.github/workflows/codeql.yml` runs CodeQL analysis for Java and Kotlin on pushes and pull requests targeting `main`.
+
+## Intentional CodeQL findings
+
+`VulnerableServlet` deliberately contains SQL injection, command injection, and a hardcoded password so that CodeQL can identify them. It is for analysis testing only; do not deploy it or use its patterns in production code.
