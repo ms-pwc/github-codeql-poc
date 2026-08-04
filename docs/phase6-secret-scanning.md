@@ -21,4 +21,13 @@ Patterns included:
 
 ## Recorded result
 
-Pending verification in repository UI/API after push.
+Recorded on 2026-08-04:
+
+1. Secret scanning is enabled.
+2. Secret scanning push protection is enabled.
+3. Current alert list returned no results (`[]`) at check time.
+
+Notes:
+
+1. Generic passwords such as `Admin123` are usually not detected by secret scanning alone.
+2. Provider-pattern tokens may require additional indexing time after push.

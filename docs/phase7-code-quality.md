@@ -28,4 +28,8 @@ Added code smell examples in src/main/java/com/example/CodeQualitySmells.java:
 
 ## Recorded result
 
-Pending verification after feature is enabled.
+Recorded on 2026-08-04:
+
+1. API enablement attempt returned HTTP 422.
+2. GitHub message: "When billing is bundled Code Security can only be enabled if Advanced Security is enabled."
+3. Code Quality findings cannot be validated until Advanced Security/Code Security policy requirements are satisfied.
