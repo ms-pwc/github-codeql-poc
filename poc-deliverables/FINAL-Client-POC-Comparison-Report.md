@@ -12,7 +12,7 @@
 
 The POC proves that GitHub CodeQL is a strong, low-operations security scanner for GitHub-hosted development. The expanded Java benchmark evaluated 240 rules and produced 19 actionable pull-request findings: 5 critical, 8 high, 4 medium, and 2 maintainability notes. Across the full POC, CodeQL demonstrated 17 unique rule IDs, including SQL injection, command injection, SSRF, XXE, XPath injection, JNDI injection, Zip Slip, insecure randomness, unsafe deserialization, XSS, path traversal, weak cryptography, regex injection, URL redirection, cookie security, and unread variables.
 
-The same POC does not support replacing SonarQube for code quality today. The CodeQL `security-and-quality` suite detected only one of four designed quality categories, while the separate GitHub Code Quality product is not enabled for this repository. Technical-debt tracking, broad maintainability coverage, coverage/duplication governance, portfolio dashboards, and mature quality gates remain SonarQube strengths.
+The POC does not establish that GitHub fully replaces SonarQube for code quality. The CodeQL `security-and-quality` suite detected one of four designed quality categories, while the newly enabled GitHub Code Quality page reports Excellent maintainability, Excellent reliability, 0 findings, and 0 open rules for this repository. Technical-debt tracking, broad maintainability coverage, coverage/duplication governance, portfolio dashboards, and mature quality gates remain SonarQube comparison points that require broader portfolio validation.
 
 The evidence supports two viable approaches. SonarQube emphasizes mature code-quality governance, technical-debt metrics, coverage, duplication, and portfolio reporting. GitHub emphasizes native security scanning, pull-request integration, and lower infrastructure overhead. The following sections present both alternatives without selecting one.
 
@@ -31,7 +31,7 @@ The evidence supports two viable approaches. SonarQube emphasizes mature code-qu
 | Secure negative controls flagged | 0 of 4 |
 | Final workflow | Success in 1m 28s |
 | Secret Scanning | Enabled; 0 unresolved secrets |
-| GitHub Code Quality | Not enabled |
+| GitHub Code Quality | Enabled; Excellent maintainability and reliability; 0 findings |
 
 ## 3. Scope and method
 
@@ -86,7 +86,7 @@ Two additional cookie-security rules were discovered without being explicitly ta
 | Duplicate methods | Not detected |
 | Large/complex method | Not detected |
 
-CodeQL detected one of four designed quality categories (25%). This does not measure the separate GitHub Code Quality product, because that feature is not enabled. The result demonstrates that CodeQL's expanded query suite adds useful quality signals but is not a complete SonarQube quality replacement.
+CodeQL detected one of four designed quality categories (25%). Separately, the enabled GitHub Code Quality page reports Excellent maintainability, Excellent reliability, 0 findings, 0 open rules, and 0 AI findings for this repository. This is positive product evidence, but a zero-finding score on a small synthetic POC is not equivalent to proving SonarQube feature parity; the same benchmark should be repeated on representative production repositories.
 
 ## 7. Secret Scanning result
 
@@ -98,7 +98,7 @@ Secret Scanning and push protection are enabled. The authenticated repository pa
 | --- | --- | --- | --- |
 | Taint-based security analysis | Strong | Strong | GitHub proven with 14/16 planned scenarios |
 | Pull-request annotations | Supported | Native and proven | GitHub has lower integration friction |
-| Code smells | Broad | Limited in CodeQL suite; Code Quality not enabled | SonarQube advantage |
+| Code smells | Broad | Code Quality enabled; no open findings in this POC | Broader portfolio validation required |
 | Maintainability rating | Mature | Not proven | SonarQube advantage |
 | Technical debt | Mature debt model | No equivalent proven | SonarQube advantage |
 | Coverage governance | Native metric and gates | Requires external coverage plus checks | SonarQube advantage |
@@ -159,7 +159,7 @@ The final run initially experienced a transient Maven Central HTTP 429, then suc
 
 **Cons**
 
-- GitHub Code Quality is entitlement-dependent and not enabled in this repository.
+- GitHub Code Quality is now enabled and reports Excellent maintainability and reliability with 0 findings in this small POC.
 - CodeQL quality-query coverage was limited in the designed benchmark.
 - No mature technical-debt model was proven.
 - Security query coverage depends on supported languages/framework models.
@@ -179,7 +179,7 @@ The final run initially experienced a transient Maven Central HTTP 429, then suc
 ### Alternative B: GitHub-native approach
 
 - Use CodeQL advanced setup, Secret Scanning, push protection, rulesets, and pull-request checks.
-- Enable GitHub Code Quality and benchmark its rule coverage before production rollout.
+- GitHub Code Quality is enabled for this repository; validate its ratings and rule coverage on representative production repositories before rollout.
 - Integrate external test-coverage and duplication reporting where GitHub-native findings do not provide the required controls.
 - Best fit when repositories are already on GitHub and native developer workflow plus low infrastructure overhead are priorities.
 - Trade-offs: entitlement-dependent features, limited quality coverage demonstrated in this POC, and no mature technical-debt model.
@@ -197,7 +197,7 @@ The final run initially experienced a transient Maven Central HTTP 429, then suc
 
 [[IMAGE:05-secret-scanning.png|Figure 5 — Secret Scanning shows 0 open and 0 closed alerts.]]
 
-[[IMAGE:06-code-quality.png|Figure 6 — GitHub Code Quality is not enabled for this repository.]]
+[[IMAGE:06-code-quality.png|Figure 6 — GitHub Code Quality is enabled: Excellent maintainability, Excellent reliability, and 0 open findings.]]
 
 ## 13. Evidence links
 
