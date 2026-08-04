@@ -4,9 +4,9 @@ This folder contains the management-facing output for the SonarQube versus GitHu
 
 | Document | Audience | Purpose |
 | --- | --- | --- |
-| [Final client decision report](FINAL-SonarQube-vs-GitHub-CodeQL-POC-Decision-Report.docx) | Client sponsors and tool-selection decision makers | Canonical 18-page Word report with measured benchmark results, weighted recommendation, and six authenticated screenshots. |
-| [Final report source](FINAL-Client-POC-Decision-Report.md) | POC maintainers | Version-controlled source for the canonical Word report. |
-| [Decision assumptions](final-decision-assumptions.md) | Governance and procurement stakeholders | Explicit policy, licensing, and evidence assumptions used to close the decision model without inventing client contract facts. |
+| [Final client comparison report](FINAL-SonarQube-vs-GitHub-CodeQL-POC-Comparison-Report.docx) | Client sponsors and tool-selection stakeholders | Canonical 16-page Word report with measured benchmark results, pros/cons, two alternatives, and six authenticated screenshots. |
+| [Final report source](FINAL-Client-POC-Comparison-Report.md) | POC maintainers | Version-controlled source for the canonical Word comparison report. |
+| [Comparison assumptions](final-comparison-assumptions.md) | Governance and procurement stakeholders | Explicit policy, licensing, and evidence assumptions used to compare both alternatives without inventing client contract facts. |
 | [Executive POC report](01-executive-poc-report.md) | Sponsors and decision makers | Full functional, operational, and recommendation analysis. |
 | [Recommendation deck](02-recommendation-deck.md) | Leadership presentation | Seven-slide Markdown deck ready to move into PowerPoint. |
 | [SonarQube SME questionnaire](03-sonarqube-sme-questionnaire.md) | Alex Popps, Jim Jones, and SonarQube stakeholders | Collect policy, licensing, governance, and usage inputs. |
@@ -16,6 +16,6 @@ This folder contains the management-facing output for the SonarQube versus GitHu
 
 Naveen leads the POC for code-quality and security-scanning tools across SonarQube and CodeQL. Alex Popps and Jim Jones, from Chris Greg's team, are the requested contacts for PwC policy, SonarQube licensing, governance, and mandatory-rule input. Dan is aware that the Microsoft team does not provide SonarQube subject-matter expertise.
 
-## Current recommendation
+## Comparison posture
 
-Adopt a hybrid model initially: use GitHub CodeQL and Secret Scanning for GitHub-native security feedback, while retaining SonarQube until SonarQube rule, technical-debt, reporting, and quality-gate requirements have been confirmed and covered.
+The POC presents two alternatives without selecting one. SonarQube emphasizes mature code-quality governance and reporting; GitHub emphasizes native security integration and lower infrastructure overhead.

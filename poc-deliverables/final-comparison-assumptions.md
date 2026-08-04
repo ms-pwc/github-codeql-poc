@@ -1,6 +1,6 @@
-# Final Decision Assumptions
+# Final Comparison Assumptions
 
-These assumptions close the POC decision model without presenting unverified PwC contract or policy details as facts. They are the baseline used for the final recommendation.
+These assumptions complete the POC comparison without presenting unverified PwC contract or policy details as facts. They provide a consistent baseline for evaluating both alternatives.
 
 ## Evidence boundary
 
@@ -26,6 +26,6 @@ These assumptions close the POC decision model without presenting unverified PwC
 4. If SonarQube Server is selected, PwC owns server/database availability, backup, patching, upgrades, monitoring, and plugin compatibility.
 5. If SonarQube Cloud is selected, infrastructure operations reduce, but licensing, configuration, quality profiles, and governance administration remain.
 
-## Decision interpretation
+## Comparison interpretation
 
-The recommendation is valid under the assumptions above. If PwC later confirms that technical-debt reporting, quality gates, coverage, duplication, or portfolio dashboards are not required, the case for GitHub-only becomes stronger. If those controls are mandatory, a hybrid or SonarQube-led quality model remains necessary.
+If PwC confirms that technical-debt reporting, quality gates, coverage, duplication, or portfolio dashboards are mandatory, the SonarQube alternative is stronger. If those controls are not required and GitHub-native integration plus lower operational effort carry greater weight, the GitHub alternative is stronger.

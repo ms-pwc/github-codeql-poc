@@ -3,20 +3,20 @@
 ## SonarQube versus GitHub CodeQL and GitHub-native capabilities
 
 **POC lead:** Naveen  
-**Client objective:** Select a strategic code-quality and security-scanning toolset  
+**Client objective:** Compare SonarQube and GitHub-native code-quality and security-scanning toolsets  
 **Repository:** `ms-pwc/github-codeql-poc`  
-**Decision date:** 4 August 2026  
-**Recommendation:** Hybrid adoption, with GitHub CodeQL for security and SonarQube retained for mature quality governance
+**Assessment date:** 4 August 2026  
+**Output:** Neutral evaluation of two alternatives: SonarQube or GitHub-native tooling
 
-## 1. Executive decision
+## 1. Executive comparison
 
 The POC proves that GitHub CodeQL is a strong, low-operations security scanner for GitHub-hosted development. The expanded Java benchmark evaluated 240 rules and produced 19 actionable pull-request findings: 5 critical, 8 high, 4 medium, and 2 maintainability notes. Across the full POC, CodeQL demonstrated 17 unique rule IDs, including SQL injection, command injection, SSRF, XXE, XPath injection, JNDI injection, Zip Slip, insecure randomness, unsafe deserialization, XSS, path traversal, weak cryptography, regex injection, URL redirection, cookie security, and unread variables.
 
 The same POC does not support replacing SonarQube for code quality today. The CodeQL `security-and-quality` suite detected only one of four designed quality categories, while the separate GitHub Code Quality product is not enabled for this repository. Technical-debt tracking, broad maintainability coverage, coverage/duplication governance, portfolio dashboards, and mature quality gates remain SonarQube strengths.
 
-**Decision:** adopt a hybrid model. Standardize GitHub CodeQL and Secret Scanning for native pre-merge security feedback. Retain SonarQube for code quality and governance for an initial 6-12 month transition. Reconsider SonarQube retirement only after GitHub Code Quality is licensed, enabled, and benchmarked against the adopted quality baseline.
+The evidence supports two viable approaches. SonarQube emphasizes mature code-quality governance, technical-debt metrics, coverage, duplication, and portfolio reporting. GitHub emphasizes native security scanning, pull-request integration, and lower infrastructure overhead. The following sections present both alternatives without selecting one.
 
-## 2. Decision highlights
+## 2. Evaluation highlights
 
 | Measure | Result |
 | --- | --- |
@@ -35,13 +35,13 @@ The same POC does not support replacing SonarQube for code quality today. The Co
 
 ## 3. Scope and method
 
-The GitHub side was tested directly through source changes, Maven compilation, GitHub Actions, CodeQL SARIF results, repository dashboards, pull-request checks, Secret Scanning, and authenticated screenshots. SonarQube was not connected because no client SonarQube endpoint or token was supplied; its evaluation uses published product capabilities and explicit decision assumptions rather than fabricated runtime results.
+The GitHub side was tested directly through source changes, Maven compilation, GitHub Actions, CodeQL SARIF results, repository dashboards, pull-request checks, Secret Scanning, and authenticated screenshots. SonarQube was not connected because no client SonarQube endpoint or token was supplied; its evaluation uses published product capabilities and explicit comparison assumptions rather than fabricated runtime results.
 
 The benchmark included intentionally vulnerable Java/Jakarta Servlet fixtures and four secure negative controls. Results were counted by unique rule ID as well as total finding count. The final workflow used CodeQL v4, Java 17, manual Maven build mode, and the `security-and-quality` query suite.
 
 ## 4. Adopted client requirements and assumptions
 
-To avoid leaving decision fields unanswered, the report uses the following governance baseline:
+To avoid leaving evaluation fields unanswered, the report uses the following governance baseline:
 
 1. Critical and high-confidence new security findings block merge until remediated or formally risk-accepted.
 2. New code should achieve at least 80% test coverage when coverage data is available.
@@ -124,7 +124,7 @@ Secret Scanning and push protection are enabled. The authenticated repository pa
 | Dependency risk | Server, DB, plugins | Actions/SaaS/network and package repositories |
 | Observed run | Not tested | 1m 28s successful final run |
 
-The final run initially experienced a transient Maven Central HTTP 429, then succeeded unchanged on rerun. This is an external dependency availability risk, not a CodeQL analysis failure. Recommended mitigation is Maven caching, an approved artifact proxy, and retry policy.
+The final run initially experienced a transient Maven Central HTTP 429, then succeeded unchanged on rerun. This is an external dependency availability risk, not a CodeQL analysis failure. Practical mitigation includes Maven caching, an approved artifact proxy, and retry policy.
 
 ## 10. Pros and cons
 
@@ -166,42 +166,26 @@ The final run initially experienced a transient Maven Central HTTP 429, then suc
 - Response-splitting fixture demonstrated a modeling gap.
 - Workflow execution depends on Actions, network availability, and package repositories.
 
-## 11. Weighted decision score
+## 11. Alternatives and implementation considerations
 
-Scores are 1-5. GitHub scores use measured POC evidence; SonarQube scores use published capability under the adopted assumptions.
+### Alternative A: SonarQube-led approach
 
-| Criterion | Weight | SonarQube | GitHub-only | Hybrid |
-| --- | ---: | ---: | ---: | ---: |
-| Security coverage | 25% | 4 | 5 | 5 |
-| Code quality depth | 20% | 5 | 2 | 5 |
-| Pull-request experience | 15% | 4 | 5 | 5 |
-| Governance and reporting | 15% | 5 | 3 | 5 |
-| Operational simplicity | 15% | 2 | 5 | 3 |
-| Cost/lock-in flexibility | 10% | 3 | 3 | 2 |
-| **Weighted score / 100** | **100%** | **79** | **78** | **88** |
+1. Use SonarQube as the primary code-quality and security-governance platform.
+2. Apply SonarQube quality gates for maintainability, technical debt, coverage, duplication, reliability, and security.
+3. Use pull-request decoration and CI quality-gate checks to provide developer feedback.
+4. Best fit when portfolio dashboards, audit reporting, custom quality profiles, and cross-SCM governance are priority requirements.
+5. Trade-offs: server and database operations for SonarQube Server, separate administration, integration configuration, and commercial licensing.
 
-The hybrid option scores highest because it combines measured GitHub security and PR strengths with SonarQube quality/governance depth. Its disadvantages are dual licensing and temporary administrative overlap.
+### Alternative B: GitHub-native approach
 
-## 12. Final recommendation and roadmap
+- Use CodeQL advanced setup, Secret Scanning, push protection, rulesets, and pull-request checks.
+- Enable GitHub Code Quality and benchmark its rule coverage before production rollout.
+- Integrate external test-coverage and duplication reporting where GitHub-native findings do not provide the required controls.
+- Best fit when repositories are already on GitHub and native developer workflow plus low infrastructure overhead are priorities.
+- Trade-offs: entitlement-dependent features, limited quality coverage demonstrated in this POC, and no mature technical-debt model.
+- Validate all required languages, frameworks, reports, and commercial costs against the application portfolio.
 
-### Recommendation: Hybrid, then evidence-based consolidation
-
-1. **Now:** standardize CodeQL advanced setup, Secret Scanning, push protection, and security merge blocking for GitHub repositories.
-2. **Now:** retain SonarQube for quality gates, maintainability, technical debt, coverage, duplication, and portfolio reporting.
-3. **Within 90 days:** enable GitHub Code Quality on representative private repositories if entitlement is approved; rerun the same quality benchmark.
-4. **Within 6 months:** compare finding coverage, false positives, remediation time, developer acceptance, license cost, and administration effort across representative teams.
-5. **At 6-12 months:** retire SonarQube only if GitHub meets the adopted quality/governance baseline and migration costs are justified.
-
-### Go/no-go criteria for GitHub-only
-
-- GitHub Code Quality detects at least 80% of mandatory quality-rule categories.
-- Coverage and duplication controls are enforceable in required repositories.
-- Portfolio and audit reporting meet stakeholder needs.
-- Required languages and frameworks are supported.
-- Total commercial cost is lower after including GitHub security/quality entitlements.
-- No mandatory SonarQube custom rule or report remains uncovered.
-
-## 13. Evidence gallery
+## 12. Evidence gallery
 
 [[IMAGE:01-pr-checks-overview.png|Figure 1 — Pull request checks are visible before merge.]]
 
@@ -215,7 +199,7 @@ The hybrid option scores highest because it combines measured GitHub security an
 
 [[IMAGE:06-code-quality.png|Figure 6 — GitHub Code Quality is not enabled for this repository.]]
 
-## 14. Evidence links
+## 13. Evidence links
 
 - Pull request: https://github.com/ms-pwc/github-codeql-poc/pull/1
 - Final workflow: https://github.com/ms-pwc/github-codeql-poc/actions/runs/30892230825
@@ -225,7 +209,7 @@ The hybrid option scores highest because it combines measured GitHub security an
 - Benchmark source: `src/main/java/com/example/ExtendedSecurityBenchmarkServlet.java`
 - Secure controls: `src/main/java/com/example/SecureNegativeControls.java`
 
-## 15. Product references
+## 14. Product references
 
 - GitHub CodeQL code scanning: https://docs.github.com/en/code-security/code-scanning/introduction-to-code-scanning/about-code-scanning-with-codeql
 - GitHub Secret Scanning: https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning
@@ -233,10 +217,10 @@ The hybrid option scores highest because it combines measured GitHub security an
 - SonarQube documentation: https://docs.sonarsource.com/sonarqube-server/latest/
 - SonarQube plans and pricing: https://www.sonarsource.com/plans-and-pricing/
 
-## 16. Limitations
+## 15. Limitations
 
-1. SonarQube was not runtime-tested because no client instance/token was supplied; the recommendation compensates with conservative assumptions and retains SonarQube for its strongest capability area.
+1. SonarQube was not runtime-tested because no client instance or token was supplied; the assessment therefore uses published capabilities and conservative assumptions without presenting runtime equivalence as proven.
 2. The benchmark is Java/Jakarta-focused and must be repeated for other portfolio languages.
 3. Intentional vulnerabilities must remain isolated to this POC and must never be deployed.
 4. No real secrets were committed; Secret Scanning behavior was tested safely with synthetic values.
-5. Pricing conclusions require contract review, but the technical decision does not depend on invented customer-specific prices.
+5. Pricing conclusions require contract review; the comparison intentionally avoids inventing customer-specific prices.
