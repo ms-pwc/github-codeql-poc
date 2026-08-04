@@ -1,4 +1,11 @@
-# Compiled class file
+# Java build artifacts
+*.class
+out/
+target/
+
+# IDE files
+.idea/
+.vscode/# Compiled class file
 *.class
 
 # Log file
