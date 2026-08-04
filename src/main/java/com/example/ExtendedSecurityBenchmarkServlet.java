@@ -111,7 +111,10 @@ public class ExtendedSecurityBenchmarkServlet extends HttpServlet {
     }
 
     private void demonstrateResponseSplitting(HttpServletRequest request, HttpServletResponse response) {
-        response.addHeader("X-Benchmark-User", request.getParameter("headerValue"));
+        String contentType = request.getParameter("contentType");
+        response.addHeader("Content-Type", contentType);
+        response.setHeader("X-Benchmark-User", request.getParameter("headerValue"));
+        response.addCookie(new Cookie("benchmark-user", request.getParameter("cookieValue")));
     }
 
     private void demonstrateZipSlip(HttpServletRequest request) throws IOException {
